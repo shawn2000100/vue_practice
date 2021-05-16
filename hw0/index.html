@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>0515Vue</title>
+
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+<div id="app">
+    <!-- 輸入 Todo 並新增 -->
+    <label for="newToDoItem">Add Todo: </label>
+    <input 
+        type="text" 
+        v-model="d.todoItem" 
+        v-bind:placeholder="d.todoPh"
+        id="newToDoItem"
+    >
+    <button @click="addTodoItem">Add</button>
+    <br>
+
+    <!-- 顯示 Todos 並打勾-->
+    <div>
+        <label v-for="item in d.todoList">
+            <input 
+                type="checkbox" 
+                v-bind:value="item"
+                v-model="d.doneList"
+            >
+            {{item | todoItemFormat}}
+            <br>
+        </label>
+    </div>
+    <button @click="deleteTodoItem">Clear</button>
+    <span>Data Operation Counts: {{d.operationCount}}</span>
+
+    <!-- 顯示 DoneList (做完的) -->
+    <div id="DoneList">
+        <p><span class="doneListTitle">Task Done: </span>{{doneString}}</p>
+    </div>
+    
+    <!-- 單純好 Debug -->
+    <hr>
+    <blockquote>>> This Block Only For Debug</blockquote>
+    <pre>
+        {{d}}
+    </pre>
+</div>
+
+<script>
+var vm = new Vue({
+    el: '#app',
+    data: {
+        d: {
+            todoItem: "",
+            todoPh: "Enter Something Todo",
+            todoList: ['A', 'B', 'C', 'D', 'E', 'G'],
+            doneList: [],
+            operationCount: 0
+        }
+    },
+    filters: {
+        todoItemFormat: function(item){
+            return `| ${item} |`;
+        },
+    },
+    computed: {
+        doneString: function(){
+            return this.d.doneList.join(", ");
+        }
+    },
+    methods: {
+        addTodoItem: function(){
+            if(this.d.todoItem != ""){
+                this.d.todoList.push(this.d.todoItem);
+                this.d.todoItem = "";
+                alert("Add Item Success!");
+            }        
+        },
+        deleteTodoItem: function(){
+            if(this.d.doneList != null){
+                this.d.doneList.forEach(function(item, index){
+                    vm.$data.d.todoList.splice(index, 1);
+                });
+                // Finish Clear
+                this.d.doneList = [];
+                alert("Clear Done Task Success!");
+            }
+        }
+    },
+    watch: {
+        "d.todoList": function(){
+            this.d.operationCount++;
+        }
+    }
+})
+</script>
+</body>
+</html>
+
+
+

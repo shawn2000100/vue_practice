@@ -1,0 +1,37 @@
+#app {
+    ul{
+        list-style: none;
+        padding: 0;
+        
+        li{
+          height: 2rem;
+          border-radius: 4px;
+          line-height: 2rem;
+          padding-left: 1rem;
+          margin: 0;
+          
+          label{
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
+          
+          &:hover{
+            background-color: #dddddd;
+          }
+        }
+      }
+
+      .doneListTitle{
+        font-size: 1.2em;
+        color: red;
+      }
+      
+      #DoneList{
+        width: 95vw;
+        height: 4rem;
+        background-color: #eeeeee;
+        padding: 4px;
+        border-radius: 4px;
+      }
+}
